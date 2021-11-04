@@ -1,4 +1,9 @@
-import { FunctionComponent, MouseEventHandler } from "react";
+import {
+  FunctionComponent,
+  MouseEventHandler,
+  useState,
+  FormEventHandler,
+} from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,12 +16,29 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { signUp } from "lib/firebase/auth";
 
 interface SignUpFormProps {
   handleSignIn: MouseEventHandler<HTMLAnchorElement>;
 }
 
 const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
+  const [username, setUsername] = useState(null as string | null);
+  const [email, setEmail] = useState(null as string | null);
+  const [password, setPassword] = useState(null as string | null);
+  const [confirmPassword, setConfirmPassword] = useState(null as string | null);
+
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    if (email && password && password === confirmPassword) {
+      try {
+        signUp(email, password);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -34,10 +56,17 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 3 }}>
+        <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField required fullWidth label="Username" name="username" />
+              <TextField
+                required
+                fullWidth
+                label="Username"
+                name="username"
+                autoFocus
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -47,6 +76,7 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -57,6 +87,7 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
                 label="Password"
                 type="password"
                 autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -67,6 +98,7 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
                 label="Confirm Password"
                 type="password"
                 autoComplete="new-password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </Grid>
           </Grid>

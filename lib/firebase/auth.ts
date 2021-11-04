@@ -11,6 +11,7 @@ export async function signIn(email: string, password: string) {
   return signInWithEmailAndPassword(auth, email, password);
 }
 
+// TODO: Add creation of username in signUp
 export async function signUp(email: string, password: string) {
   try {
     createUserWithEmailAndPassword(auth, email, password);
