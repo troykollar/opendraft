@@ -30,9 +30,9 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    if (email && password && password === confirmPassword) {
+    if (username && email && password && password === confirmPassword) {
       try {
-        signUp(email, password);
+        signUp(username, email, password);
       } catch (err) {
         console.error(err);
       }
