@@ -49,7 +49,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
     }
   };
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="xs">
       <Box
         sx={{
           marginTop: 8,
@@ -65,35 +65,43 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
           Sign in
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            margin="normal"
-            type="password"
-            required
-            fullWidth
-            label="Password"
-            name="password"
-            autoComplete="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
+        <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                margin="normal"
+                type="password"
+                required
+                fullWidth
+                label="Password"
+                name="password"
+                autoComplete="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+            </Grid>
+          </Grid>
           <Grid container>
             <Grid item xs>
               <Link variant="body2">Forgot password?</Link>
