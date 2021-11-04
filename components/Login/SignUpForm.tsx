@@ -2,14 +2,13 @@ import {
   FunctionComponent,
   MouseEventHandler,
   useState,
+  useEffect,
   FormEventHandler,
 } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -17,6 +16,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { signUp } from "lib/firebase/auth";
+import LoginErrorSnackbar from "components/Login/LoginErrorSnackBar";
 
 interface SignUpFormProps {
   handleSignIn: MouseEventHandler<HTMLAnchorElement>;
@@ -27,14 +27,38 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
   const [email, setEmail] = useState(null as string | null);
   const [password, setPassword] = useState(null as string | null);
   const [confirmPassword, setConfirmPassword] = useState(null as string | null);
+  const [errCode, setErrCode] = useState(null as string | null);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    if (errCode) timeout = setTimeout(() => setErrCode(null), 5000);
+
+    const clear = () => {
+      if (timeout) clearTimeout(timeout);
+    };
+    return clear;
+  }, [errCode]);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    if (username && email && password && password === confirmPassword) {
+    if (!username) {
+      setErrCode("Username required");
+      return;
+    } else if (!email) {
+      setErrCode("Email required");
+      return;
+    } else if (!password) {
+      setErrCode("Password required");
+      return;
+    } else if (password !== confirmPassword) {
+      setErrCode("Passwords do not match");
+      return;
+    } else {
       try {
-        signUp(username, email, password);
-      } catch (err) {
+        await signUp(username, email, password);
+      } catch (err: any) {
         console.error(err);
+        setErrCode(String(err.code));
       }
     }
   };
@@ -119,6 +143,7 @@ const SignUpForm: FunctionComponent<SignUpFormProps> = ({ handleSignIn }) => {
           </Grid>
         </Box>
       </Box>
+      <LoginErrorSnackbar errCode={errCode} />
     </Container>
   );
 };
