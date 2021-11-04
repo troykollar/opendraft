@@ -18,10 +18,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { signIn } from "lib/firebase/auth";
-import { handleLoginError } from "lib/functions/handleLoginError";
 import LoginErrorSnackbar from "./LoginErrorSnackBar";
-import { FirebaseError } from "@firebase/util";
-
 interface LoginFormProps {
   handleSignUp: MouseEventHandler<HTMLAnchorElement>;
 }
