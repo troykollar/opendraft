@@ -1,4 +1,10 @@
-import { FunctionComponent, MouseEventHandler } from "react";
+import {
+  FunctionComponent,
+  MouseEventHandler,
+  FormEventHandler,
+  useState,
+  useEffect,
+} from "react";
 import {
   Container,
   Box,
@@ -11,11 +17,40 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
+import { signIn } from "lib/firebase/auth";
+import { handleLoginError } from "lib/functions/handleLoginError";
+import LoginErrorSnackbar from "./LoginErrorSnackBar";
+import { FirebaseError } from "@firebase/util";
+
 interface LoginFormProps {
   handleSignUp: MouseEventHandler<HTMLAnchorElement>;
 }
 
 const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
+  const [email, setEmail] = useState(null as string | null);
+  const [password, setPassword] = useState(null as string | null);
+  const [errCode, setErrCode] = useState(null as string | null);
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    if (errCode) timeout = setTimeout(() => setErrCode(null), 5000);
+
+    const clear = () => {
+      if (timeout) clearTimeout(timeout);
+    };
+    return clear;
+  }, [errCode]);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    if (email && password) {
+      try {
+        await signIn(email, password);
+      } catch (err: any) {
+        setErrCode(String(err.code));
+      }
+    }
+  };
   return (
     <Container component="main" maxWidth="sm">
       <Box
@@ -33,7 +68,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
           Sign in
         </Typography>
 
-        <Box component="form">
+        <Box component="form" onSubmit={handleSubmit}>
           <TextField
             margin="normal"
             required
@@ -42,6 +77,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -50,6 +86,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
             label="Password"
             name="password"
             autoComplete="password"
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button
             type="submit"
@@ -61,9 +98,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <Link variant="body2">Forgot password?</Link>
             </Grid>
             <Grid item>
               <Link onClick={handleSignUp} variant="body2">
@@ -73,6 +108,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
           </Grid>
         </Box>
       </Box>
+      <LoginErrorSnackbar errCode={errCode} />
     </Container>
   );
 };
