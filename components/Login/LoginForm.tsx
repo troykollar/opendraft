@@ -81,6 +81,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
           />
           <TextField
             margin="normal"
+            type="password"
             required
             fullWidth
             label="Password"
