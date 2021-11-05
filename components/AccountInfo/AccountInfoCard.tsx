@@ -8,30 +8,73 @@ import {
   Grid,
   Typography,
   Divider,
+  IconButton,
+  Button,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface AccountInfoCardProps {}
 
 const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
-  const { user } = useContext(UserContext);
+  const { user, userData } = useContext(UserContext);
   return (
     <Container maxWidth="sm">
-      <Paper sx={{ padding: "32px" }}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Email
-                </Typography>
-              </Grid>
-              <Grid item xs={10} sx={{ wordWrap: "break-word" }}>
-                <Typography variant="h6">{user && user.email}</Typography>
-              </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Email
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sx={{ wordWrap: "break-word" }}>
+              <Typography variant="h6">{user && user.email}</Typography>
+            </Grid>
+          </Grid>
+          <Divider sx={{ margin: "16px 0px 16px 0px" }} />
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Username
+              </Typography>
+            </Grid>
+            <Grid item xs={8} sx={{ wordWrap: "break-word" }}>
+              <Typography variant="h6">
+                {userData && userData.username}
+              </Typography>
+            </Grid>
+            <Grid item xs={4} sx={{ textAlign: "center" }}>
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Divider sx={{ margin: "16px 0px 16px 0px" }} />
+          <Grid container>
+            <Grid item xs={8}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Password
+              </Typography>
+            </Grid>
+            <Grid item xs={4} sx={{ textAlign: "center" }}>
+              <Button variant="contained">Change</Button>
+            </Grid>
+          </Grid>
+          <Divider sx={{ margin: "16px 0px 16px 0px" }} />
+          <Grid container>
+            <Grid item xs={8}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Delete Account
+              </Typography>
+            </Grid>
+            <Grid item xs={4} sx={{ textAlign: "center" }}>
+              <Button variant="contained" color="error">
+                Delete
+              </Button>
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
+      </Grid>
     </Container>
   );
 };
