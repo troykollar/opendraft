@@ -6,7 +6,7 @@ interface NavbarProps {}
 
 const Navbar: FunctionComponent<NavbarProps> = () => {
   return (
-    <AppBar>
+    <AppBar position="sticky">
       <Toolbar>
         <div style={{ flexGrow: 1 }}>OpenDraft.io</div>
         <AccountButton />
