@@ -16,7 +16,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       {user ? (
         <>
           <Navbar />
-          <Button onClick={() => signOut(auth)}>Sign Out</Button>
           <Component {...pageProps} />
         </>
       ) : loading ? (
