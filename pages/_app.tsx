@@ -7,6 +7,7 @@ import { auth } from "lib/firebase/auth";
 import { Button } from "@mui/material";
 import { signOut } from "firebase/auth";
 import FullPageLoader from "components/FullPageLoader";
+import Navbar from "components/Navbar/Navbar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, loading, error] = useAuthState(auth);
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <UserContext.Provider value={{ user }}>
       {user ? (
         <>
+          <Navbar />
           <Button onClick={() => signOut(auth)}>Sign Out</Button>
           <Component {...pageProps} />
         </>
