@@ -38,7 +38,7 @@ const AccountButton: FunctionComponent<UserAvatarProps> = () => {
 
       <Menu anchorEl={menuAnchor} open={menuOpen} onClose={handleMenuClose}>
         <Link href="/account">
-          <MenuItem>Account Info</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Account Info</MenuItem>
         </Link>
         <MenuItem onClick={logOut}>Log out</MenuItem>
       </Menu>
