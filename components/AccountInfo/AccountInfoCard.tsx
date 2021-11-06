@@ -13,12 +13,14 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import PwdChangeDialog from "components/AccountInfo/PwdChangeDialog";
+import UsernameChangeDialog from "components/AccountInfo/UsernameChangeDialog";
 
 interface AccountInfoCardProps {}
 
 const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
   const { user, userData } = useContext(UserContext);
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showChangeUsername, setShowChangeUsername] = useState(false);
 
   return (
     <>
@@ -48,7 +50,7 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
                 </Typography>
               </Grid>
               <Grid item xs={4} sx={{ textAlign: "center" }}>
-                <IconButton>
+                <IconButton onClick={() => setShowChangeUsername(true)}>
                   <EditIcon />
                 </IconButton>
               </Grid>
@@ -88,6 +90,10 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
       <PwdChangeDialog
         open={showChangePassword}
         handleClose={() => setShowChangePassword(false)}
+      />
+      <UsernameChangeDialog
+        open={showChangeUsername}
+        handleClose={() => setShowChangeUsername(false)}
       />
     </>
   );
