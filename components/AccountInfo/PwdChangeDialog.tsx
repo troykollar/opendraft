@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Grid,
   CircularProgress,
@@ -48,8 +47,10 @@ const FormDialog: FunctionComponent<PwdChangeDialogProps> = ({
         setErrCode(err.code);
       }
       setLoading(false);
+      handleClose();
     }
   };
+
   useEffect(() => {
     let errTimeout: ReturnType<typeof setTimeout> | undefined;
     if (errCode) errTimeout = setTimeout(() => setErrCode(null), 5000);
@@ -67,8 +68,21 @@ const FormDialog: FunctionComponent<PwdChangeDialogProps> = ({
               <Grid item xs={9}>
                 Change Password
               </Grid>
-              <Grid item xs={3} sx={{ textAlign: "end" }}>
-                {loading && <CircularProgress size="30px" />}
+              <Grid
+                item
+                xs={3}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
+                {loading && (
+                  <CircularProgress
+                    size="24px"
+                    sx={{ padding: 0, margin: 0 }}
+                  />
+                )}
               </Grid>
             </Grid>
           </DialogTitle>
