@@ -40,14 +40,16 @@ const FormDialog: FunctionComponent<PwdChangeDialogProps> = ({
     else if (password !== confirmPassword)
       return setErrCode("Passwords do not match");
     else {
+      let success = true;
       setLoading(true);
       try {
         await changePassword(currentPassword, password);
       } catch (err: any) {
         setErrCode(err.code);
+        success = false;
       }
       setLoading(false);
-      handleClose();
+      if (success) handleClose();
     }
   };
 
