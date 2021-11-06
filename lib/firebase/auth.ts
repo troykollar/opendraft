@@ -57,7 +57,7 @@ export async function changePassword(
   if (user && user.email) {
     try {
       credential = EmailAuthProvider.credential(user.email, currentPassword);
-      reauthenticateWithCredential(user, credential);
+      await reauthenticateWithCredential(user, credential);
       return updatePassword(user!, newPassword);
     } catch (err) {
       throw err;
