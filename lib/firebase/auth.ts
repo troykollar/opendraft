@@ -3,6 +3,12 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updatePassword,
+  reauthenticateWithCredential,
+  AuthCredential,
+  EmailAuthProvider,
+  EmailAuthCredential,
+  UserCredential,
 } from "firebase/auth";
 import { app } from "./firebase";
 import { createUserDoc } from "./firestore";
@@ -40,4 +46,21 @@ export async function signUp(
 
 export async function logOut() {
   return await signOut(auth);
+}
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+) {
+  const user = auth.currentUser;
+  let credential: EmailAuthCredential;
+  if (user && user.email) {
+    try {
+      credential = EmailAuthProvider.credential(user.email, currentPassword);
+      reauthenticateWithCredential(user, credential);
+      return updatePassword(user!, newPassword);
+    } catch (err) {
+      throw err;
+    }
+  }
 }
