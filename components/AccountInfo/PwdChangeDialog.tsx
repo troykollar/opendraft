@@ -1,9 +1,5 @@
-import {
-  useState,
-  FunctionComponent,
-  FormEventHandler,
-  useEffect,
-} from "react";
+import { useState, useEffect } from "react";
+import type { FunctionComponent, FormEventHandler } from "react";
 import {
   Button,
   TextField,

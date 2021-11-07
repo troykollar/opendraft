@@ -6,7 +6,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { EventHandler, FunctionComponent, SyntheticEvent } from "react";
+import type { EventHandler, FunctionComponent, SyntheticEvent } from "react";
 
 interface ConfirmDialogProps {
   title: string;

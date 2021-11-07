@@ -1,10 +1,9 @@
-import {
+import type {
   FunctionComponent,
   MouseEventHandler,
   FormEventHandler,
-  useState,
-  useEffect,
 } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Box,

@@ -1,7 +1,6 @@
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import Head from "next/head";
 import PageWithBackButton from "components/Pages/PageWithBackButton";
-import { Typography } from "@mui/material";
 import AccountInfoCard from "components/AccountInfo/AccountInfoCard";
 
 interface AccountProps {}

@@ -1,4 +1,5 @@
-import { FunctionComponent, useState } from "react";
+import type { FunctionComponent } from "react";
+import { useState } from "react";
 import LoginForm from "components/Login/LoginForm";
 import SignUpForm from "components/Login/SignUpForm";
 

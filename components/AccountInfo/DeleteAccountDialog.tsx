@@ -1,4 +1,5 @@
-import { FormEventHandler, FunctionComponent, useState } from "react";
+import type { FunctionComponent, FormEventHandler } from "react";
+import { useState } from "react";
 import ConfirmDialog from "components/General/ConfirmDialog";
 import { TextField } from "@mui/material";
 import { deleteAccount } from "lib/firebase/auth";
