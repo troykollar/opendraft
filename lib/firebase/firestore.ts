@@ -19,14 +19,9 @@ export const getUserDoc = async (uid: string) => {
   ).data;
 };
 
-export const createUserDoc = async (
-  uid: string,
-  username: string,
-  email: string,
-) => {
+export const createUserDoc = async (uid: string, username: string) => {
   return await setDoc(doc(firestore, `/users/${uid}`), {
     username,
-    email,
   });
 };
 

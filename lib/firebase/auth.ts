@@ -36,7 +36,6 @@ export async function signUp(
           await userCredential
         ).user.uid,
         username,
-        email,
       );
     } catch (err) {
       throw err;
