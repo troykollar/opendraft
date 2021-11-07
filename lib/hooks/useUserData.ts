@@ -7,8 +7,10 @@ import { doc, Unsubscribe, onSnapshot, DocumentData } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 export function useUserData() {
-  const [user] = useAuthState(auth);
-  const [userData, setUserData] = useState(null as DocumentData | null);
+  const [user, loading, error] = useAuthState(auth);
+  const [userData, setUserData] = useState(
+    undefined as DocumentData | undefined,
+  );
 
   useEffect(() => {
     let unsubscribe: Unsubscribe;
@@ -17,13 +19,15 @@ export function useUserData() {
       unsubscribe = onSnapshot(
         doc(firestore, `/users/${user.uid}`),
         (docSnap) => {
-          setUserData(docSnap.data);
+          setUserData(docSnap.data());
         },
       );
-    } else setUserData(null);
+    } else setUserData(undefined);
+
+    console.log(userData);
 
     return unsubscribe!;
   }, [user]);
 
-  return { user, userData };
+  return { user, userData, loading, error };
 }

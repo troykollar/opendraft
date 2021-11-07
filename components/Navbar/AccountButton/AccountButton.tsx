@@ -5,6 +5,7 @@ import {
   useContext,
   useState,
 } from "react";
+import Link from "next/link";
 import { UserContext } from "lib/context/UserContext";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
 import { logOut } from "lib/firebase/auth";
@@ -36,7 +37,9 @@ const AccountButton: FunctionComponent<UserAvatarProps> = () => {
       </IconButton>
 
       <Menu anchorEl={menuAnchor} open={menuOpen} onClose={handleMenuClose}>
-        <MenuItem>Account Info</MenuItem>
+        <Link href="/account">
+          <MenuItem onClick={handleMenuClose}>Account Info</MenuItem>
+        </Link>
         <MenuItem onClick={logOut}>Log out</MenuItem>
       </Menu>
     </>
