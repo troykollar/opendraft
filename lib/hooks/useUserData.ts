@@ -24,8 +24,6 @@ export function useUserData() {
       );
     } else setUserData(undefined);
 
-    console.log(userData);
-
     return unsubscribe!;
   }, [user]);
 
