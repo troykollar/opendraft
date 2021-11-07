@@ -5,13 +5,13 @@ import {
   signOut,
   updatePassword,
   reauthenticateWithCredential,
-  AuthCredential,
   EmailAuthProvider,
   EmailAuthCredential,
-  UserCredential,
+  User,
+  deleteUser,
 } from "firebase/auth";
 import { app } from "./firebase";
-import { createUserDoc } from "./firestore";
+import { createUserDoc, deleteUserDoc } from "./firestore";
 
 export const auth = getAuth(app);
 
@@ -48,19 +48,41 @@ export async function logOut() {
   return await signOut(auth);
 }
 
+async function reauthenticateWithPassword(user: User, password: string) {
+  try {
+    const credential = EmailAuthProvider.credential(user.email!, password);
+    await reauthenticateWithCredential(user, credential);
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function changePassword(
   currentPassword: string,
   newPassword: string,
 ) {
   const user = auth.currentUser;
-  let credential: EmailAuthCredential;
   if (user && user.email) {
     try {
-      credential = EmailAuthProvider.credential(user.email, currentPassword);
-      await reauthenticateWithCredential(user, credential);
+      await reauthenticateWithPassword(user, currentPassword);
       return updatePassword(user!, newPassword);
     } catch (err) {
       throw err;
     }
+  }
+}
+
+export async function deleteAccount(password: string) {
+  const user = auth.currentUser;
+  if (user) {
+    try {
+      await reauthenticateWithPassword(user, password);
+      await deleteUserDoc(user);
+      await deleteUser(user);
+    } catch (err) {
+      throw err;
+    }
+  } else {
+    throw new Error("auth/no-user");
   }
 }

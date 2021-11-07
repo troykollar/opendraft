@@ -14,6 +14,8 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import PwdChangeDialog from "components/AccountInfo/PwdChangeDialog";
 import UsernameChangeDialog from "components/AccountInfo/UsernameChangeDialog";
+import ConfirmDialog from "components/General/ConfirmDialog";
+import DeleteAccountDialog from "./DeleteAccountDialog";
 
 interface AccountInfoCardProps {}
 
@@ -21,6 +23,7 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
   const { user, userData } = useContext(UserContext);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showChangeUsername, setShowChangeUsername] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   return (
     <>
@@ -79,7 +82,11 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
                 </Typography>
               </Grid>
               <Grid item xs={4} sx={{ textAlign: "center" }}>
-                <Button variant="contained" color="error">
+                <Button
+                  onClick={() => setShowConfirmDelete(true)}
+                  variant="contained"
+                  color="error"
+                >
                   Delete
                 </Button>
               </Grid>
@@ -94,6 +101,10 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
       <UsernameChangeDialog
         open={showChangeUsername}
         handleClose={() => setShowChangeUsername(false)}
+      />
+      <DeleteAccountDialog
+        open={showConfirmDelete}
+        onClose={() => setShowConfirmDelete(false)}
       />
     </>
   );
