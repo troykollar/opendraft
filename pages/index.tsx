@@ -13,12 +13,15 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import CreateLeagueDialog from "components/Index/CreateLeagueDialog";
 import { useMyLeagues } from "lib/hooks/useMyLeagues";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 
 const Home: NextPage = () => {
   const [leagues, leaguesLoading, leaguesError] = useMyLeagues();
+  const [createLeagueDialog, setCreateLeagueDialog] = useState(false);
   return (
     <div>
       <Head>
@@ -34,7 +37,11 @@ const Home: NextPage = () => {
         <Container maxWidth="sm" sx={{ paddingTop: 2 }}>
           <Grid container>
             <Grid item xs={6} sx={{ padding: 2 }}>
-              <Button fullWidth variant="contained">
+              <Button
+                onClick={() => setCreateLeagueDialog(true)}
+                fullWidth
+                variant="contained"
+              >
                 Create a League
               </Button>
             </Grid>
@@ -83,6 +90,11 @@ const Home: NextPage = () => {
           </Grid>
         </Container>
       </main>
+
+      <CreateLeagueDialog
+        open={createLeagueDialog}
+        onClose={() => setCreateLeagueDialog(false)}
+      />
 
       <footer></footer>
     </div>
