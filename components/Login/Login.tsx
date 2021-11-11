@@ -8,13 +8,20 @@ const Login: FunctionComponent<LoginProps> = () => {
   const [signUp, setSignUp] = useState(false);
 
   return (
-    <>
+    <div
+      style={{
+        height: "80vh",
+        width: "100vw",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       {!signUp ? (
         <LoginForm handleSignUp={() => setSignUp(true)} />
       ) : (
         <SignUpForm handleSignIn={() => setSignUp(false)} />
       )}
-    </>
+    </div>
   );
 };
 
