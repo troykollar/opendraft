@@ -42,7 +42,9 @@ const PageWithBackButton: FunctionComponent<PageWithBackButtonProps> = ({
             textAlign: "center",
           }}
         >
-          <Typography variant="h4">{pageTitle}</Typography>
+          <Typography variant="h1" fontSize="2rem">
+            {pageTitle}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Container>{children}</Container>
