@@ -23,7 +23,7 @@ const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({
   children,
 }) => {
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <DialogContentText>{children}</DialogContentText>
