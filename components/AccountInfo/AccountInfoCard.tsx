@@ -3,13 +3,15 @@ import { useContext, useState } from "react";
 import { UserContext } from "lib/context/UserContext";
 import {
   Container,
-  Box,
   Paper,
   Grid,
   Typography,
   Divider,
   IconButton,
   Button,
+  List,
+  ListItem,
+  ListItemButton,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import PwdChangeDialog from "components/AccountInfo/PwdChangeDialog";
@@ -27,61 +29,53 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
 
   return (
     <>
-      <Container maxWidth="sm">
-        <Grid container>
-          <Grid item xs={12}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Email
-                </Typography>
+      <Container maxWidth="sm" component={Paper} variant="outlined">
+        <List>
+          <ListItemButton sx={{ padding: 2 }}>
+            <Grid container alignItems="center">
+              <Grid item sm={4} xs={12}>
+                <Typography variant="overline">Email</Typography>
               </Grid>
-              <Grid item xs={12} sx={{ wordWrap: "break-word" }}>
-                <Typography variant="h6">{user && user.email}</Typography>
+              <Grid item xs={6}>
+                <div>{user && user.email}</div>
               </Grid>
             </Grid>
-            <Divider sx={{ margin: "16px 0px 16px 0px" }} />
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Username
-                </Typography>
+          </ListItemButton>
+          <Divider />
+          <ListItemButton
+            sx={{ padding: 2 }}
+            onClick={() => setShowChangeUsername(true)}
+          >
+            <Grid container alignItems="center">
+              <Grid item sm={4} xs={12}>
+                <Typography variant="overline">Username</Typography>
               </Grid>
-              <Grid item xs={8} sx={{ wordWrap: "break-word" }}>
-                <Typography variant="h6">
-                  {userData && userData.username}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sx={{ textAlign: "center" }}>
-                <IconButton onClick={() => setShowChangeUsername(true)}>
-                  <EditIcon />
-                </IconButton>
+              <Grid item xs={6}>
+                <Typography>{userData && userData.username}</Typography>
               </Grid>
             </Grid>
-            <Divider sx={{ margin: "16px 0px 16px 0px" }} />
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Password
-                </Typography>
+          </ListItemButton>
+          <Divider />
+          <ListItemButton
+            sx={{ padding: 2 }}
+            onClick={() => setShowChangePassword(true)}
+          >
+            <Grid container alignItems="center">
+              <Grid item sm={4} xs={12}>
+                <Typography variant="overline">Password</Typography>
               </Grid>
-              <Grid item xs={4} sx={{ textAlign: "center" }}>
-                <Button
-                  onClick={() => setShowChangePassword(true)}
-                  variant="contained"
-                >
-                  Change
-                </Button>
+              <Grid item xs={6}>
+                <Typography>{"********"}</Typography>
               </Grid>
             </Grid>
-            <Divider sx={{ margin: "16px 0px 16px 0px" }} />
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Delete Account
-                </Typography>
+          </ListItemButton>
+          <Divider />
+          <ListItem sx={{ padding: 2 }}>
+            <Grid container alignItems="center">
+              <Grid item sm={4} xs={12}>
+                <Typography variant="overline">Delete Account</Typography>
               </Grid>
-              <Grid item xs={4} sx={{ textAlign: "center" }}>
+              <Grid item xs={6}>
                 <Button
                   onClick={() => setShowConfirmDelete(true)}
                   variant="contained"
@@ -91,8 +85,8 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
                 </Button>
               </Grid>
             </Grid>
-          </Grid>
-        </Grid>
+          </ListItem>
+        </List>
       </Container>
       <PwdChangeDialog
         open={showChangePassword}
