@@ -18,6 +18,7 @@ import PwdChangeDialog from "components/AccountInfo/PwdChangeDialog";
 import UsernameChangeDialog from "components/AccountInfo/UsernameChangeDialog";
 import ConfirmDialog from "components/General/ConfirmDialog";
 import DeleteAccountDialog from "./DeleteAccountDialog";
+import { ChevronRight } from "@mui/icons-material";
 
 interface AccountInfoCardProps {}
 
@@ -31,7 +32,7 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
     <>
       <Container maxWidth="sm" component={Paper} variant="outlined">
         <List>
-          <ListItemButton sx={{ padding: 2 }}>
+          <ListItem sx={{ padding: 2 }}>
             <Grid container alignItems="center">
               <Grid item sm={4} xs={12}>
                 <Typography variant="overline">Email</Typography>
@@ -40,7 +41,7 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
                 <div>{user && user.email}</div>
               </Grid>
             </Grid>
-          </ListItemButton>
+          </ListItem>
           <Divider />
           <ListItemButton
             sx={{ padding: 2 }}
@@ -50,8 +51,11 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
               <Grid item sm={4} xs={12}>
                 <Typography variant="overline">Username</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item sm={7} xs={11}>
                 <Typography>{userData && userData.username}</Typography>
+              </Grid>
+              <Grid item xs={1}>
+                <ChevronRight />
               </Grid>
             </Grid>
           </ListItemButton>
@@ -64,8 +68,11 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
               <Grid item sm={4} xs={12}>
                 <Typography variant="overline">Password</Typography>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item sm={7} xs={11}>
                 <Typography>{"********"}</Typography>
+              </Grid>
+              <Grid item xs={1}>
+                <ChevronRight />
               </Grid>
             </Grid>
           </ListItemButton>
