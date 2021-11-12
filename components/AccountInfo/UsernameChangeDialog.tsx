@@ -53,7 +53,7 @@ const FormDialog: FunctionComponent<PwdChangeDialogProps> = ({
   }, [errCode]);
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth>
         <form onSubmit={handleSubmit}>
           <DialogTitle>
             <Grid container>
