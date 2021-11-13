@@ -43,12 +43,12 @@ const Home: NextPage = () => {
                 fullWidth
                 variant="contained"
               >
-                Create a League
+                Create
               </Button>
             </Grid>
             <Grid item xs={6} sx={{ padding: 2 }}>
               <Button fullWidth variant="contained" disabled>
-                Join a league
+                Join
               </Button>
             </Grid>
           </Grid>
