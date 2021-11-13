@@ -13,19 +13,23 @@ import {
   Button,
   Grid,
   Link,
+  Switch,
+  FormControlLabel,
+  Collapse,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import { signIn } from "lib/firebase/auth";
+import { signIn, signUp } from "lib/firebase/auth";
 import LoginErrorSnackbar from "./LoginErrorSnackBar";
-interface LoginFormProps {
-  handleSignUp: MouseEventHandler<HTMLAnchorElement>;
-}
+interface LoginFormProps {}
 
-const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
+const LoginForm: FunctionComponent<LoginFormProps> = ({}) => {
   const [email, setEmail] = useState(null as string | null);
   const [password, setPassword] = useState(null as string | null);
+  const [confirmPassword, setConfirmPassword] = useState(null as string | null);
+  const [username, setUsername] = useState(null as string | null);
   const [errCode, setErrCode] = useState(null as string | null);
+  const [newUser, setNewUser] = useState(false);
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>;
@@ -39,11 +43,34 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    if (email && password) {
-      try {
-        await signIn(email, password);
-      } catch (err: any) {
-        setErrCode(String(err.code));
+    if (!newUser) {
+      if (email && password) {
+        try {
+          await signIn(email, password);
+        } catch (err: any) {
+          setErrCode(String(err.code));
+        }
+      }
+    } else {
+      if (!username) {
+        setErrCode("Username required");
+        return;
+      } else if (!email) {
+        setErrCode("Email required");
+        return;
+      } else if (!password) {
+        setErrCode("Password required");
+        return;
+      } else if (password !== confirmPassword) {
+        setErrCode("Passwords do not match");
+        return;
+      } else {
+        try {
+          await signUp(username, email, password);
+        } catch (err: any) {
+          console.error(err);
+          setErrCode(String(err.code));
+        }
       }
     }
   };
@@ -61,14 +88,13 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          {newUser ? "Sign up" : "Sign in"}
         </Typography>
 
         <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
+          <Grid container>
             <Grid item xs={12}>
               <TextField
-                margin="normal"
                 required
                 fullWidth
                 label="Email Address"
@@ -80,7 +106,6 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                margin="normal"
                 type="password"
                 required
                 fullWidth
@@ -88,8 +113,38 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
                 name="password"
                 autoComplete="password"
                 onChange={(e) => setPassword(e.target.value)}
+                sx={{ marginTop: 2 }}
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <Collapse in={newUser}>
+                <TextField
+                  type="password"
+                  fullWidth
+                  required={newUser}
+                  label="Confirm Password"
+                  autoComplete="password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  sx={{ marginTop: 2 }}
+                />
+              </Collapse>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Collapse in={newUser}>
+                <TextField
+                  type="username"
+                  fullWidth
+                  required={newUser}
+                  label="Username"
+                  autoComplete="username"
+                  onChange={(e) => setUsername(e.target.value)}
+                  sx={{ marginTop: 2 }}
+                />
+              </Collapse>
+            </Grid>
+
             <Grid item xs={12}>
               <Button
                 type="submit"
@@ -97,17 +152,25 @@ const LoginForm: FunctionComponent<LoginFormProps> = ({ handleSignUp }) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                {newUser ? "Sign Up" : "Sign In"}
               </Button>
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid item xs>
-              <Link variant="body2">Forgot password?</Link>
+          <Grid container alignItems="center">
+            <Grid item xs={6}>
+              <FormControlLabel
+                control={
+                  <Switch onChange={(e) => setNewUser(e.target.checked)} />
+                }
+                label="New User"
+              />
             </Grid>
-            <Grid item>
-              <Link onClick={handleSignUp} variant="body2">
-                {"Don't have an account? Sign Up"}
+            <Grid item xs={6} textAlign="right">
+              <Link
+                onClick={() => console.log("forgot password")}
+                variant="body2"
+              >
+                {"Forgot Password?"}
               </Link>
             </Grid>
           </Grid>
