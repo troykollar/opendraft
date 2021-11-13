@@ -1,5 +1,5 @@
 import { Container, IconButton, Grid, Typography } from "@mui/material";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from "next/router";
 

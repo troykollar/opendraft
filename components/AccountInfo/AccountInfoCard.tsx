@@ -1,5 +1,5 @@
-import { User } from "firebase/auth";
-import { FunctionComponent, useContext, useState } from "react";
+import type { FunctionComponent } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "lib/context/UserContext";
 import {
   Container,

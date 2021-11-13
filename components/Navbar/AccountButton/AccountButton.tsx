@@ -1,10 +1,5 @@
-import {
-  createRef,
-  FunctionComponent,
-  MouseEventHandler,
-  useContext,
-  useState,
-} from "react";
+import type { FunctionComponent, MouseEventHandler } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 import { UserContext } from "lib/context/UserContext";
 import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";

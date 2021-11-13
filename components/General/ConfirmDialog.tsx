@@ -6,7 +6,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { EventHandler, FunctionComponent, SyntheticEvent } from "react";
+import type { EventHandler, FunctionComponent, SyntheticEvent } from "react";
 
 interface ConfirmDialogProps {
   title: string;
@@ -25,9 +25,7 @@ const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>{children}</DialogContentText>
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="error">
           Cancel

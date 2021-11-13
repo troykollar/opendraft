@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { CircularProgress, Container } from "@mui/material";
 
 interface FullPageLoaderProps {}

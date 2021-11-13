@@ -1,5 +1,5 @@
 import { AppBar, Toolbar } from "@mui/material";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import AccountButton from "./AccountButton/AccountButton";
 
 interface NavbarProps {}

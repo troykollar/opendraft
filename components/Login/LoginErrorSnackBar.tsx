@@ -1,5 +1,6 @@
-import { FunctionComponent, useEffect, useState } from "react";
-import { Alert, Container, Snackbar } from "@mui/material";
+import { useEffect, useState } from "react";
+import type { FunctionComponent } from "react";
+import { Alert, Snackbar } from "@mui/material";
 
 interface LoginErrorSnackbarProps {
   errCode: string | null;

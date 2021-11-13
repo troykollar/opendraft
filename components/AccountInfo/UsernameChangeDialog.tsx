@@ -1,9 +1,5 @@
-import {
-  useState,
-  FunctionComponent,
-  FormEventHandler,
-  useEffect,
-} from "react";
+import { useState, useEffect } from "react";
+import type { FunctionComponent, FormEventHandler } from "react";
 import {
   Button,
   TextField,
@@ -14,7 +10,6 @@ import {
   Grid,
   CircularProgress,
 } from "@mui/material";
-import { changePassword } from "lib/firebase/auth";
 import LoginErrorSnackbar from "components/Login/LoginErrorSnackBar";
 import changeUsername from "lib/functions/changeUsername";
 
