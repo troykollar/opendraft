@@ -16,6 +16,7 @@ async function createLeague(
         name: `Team ${i + 1}`,
         owner: auth.currentUser.uid,
         players: [],
+        draftPos: i,
       });
     }
     let league: LeagueDoc = {

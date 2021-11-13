@@ -39,4 +39,5 @@ export interface Team {
   name: string;
   owner: string;
   players: Player[];
+  draftPos: number;
 }

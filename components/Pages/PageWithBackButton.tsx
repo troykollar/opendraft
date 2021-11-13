@@ -14,7 +14,7 @@ const PageWithBackButton: FunctionComponent<PageWithBackButtonProps> = ({
   const router = useRouter();
   return (
     <>
-      <Grid container sx={{ paddingTop: "32px" }}>
+      <Grid container sx={{ paddingTop: 4, paddingBottom: 5 }}>
         <Grid
           item
           xs={3}
