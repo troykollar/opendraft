@@ -20,6 +20,8 @@ import ConfirmDialog from "components/General/ConfirmDialog";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 import { ChevronRight } from "@mui/icons-material";
 import TitledListItem from "components/General/TitledListItem";
+import ChangeTextDialog from "components/General/ChangeTextDialog";
+import changeUsername from "lib/functions/changeUsername";
 
 interface AccountInfoCardProps {}
 
@@ -64,10 +66,14 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
         open={showChangePassword}
         handleClose={() => setShowChangePassword(false)}
       />
-      <UsernameChangeDialog
+      <ChangeTextDialog
         open={showChangeUsername}
-        handleClose={() => setShowChangeUsername(false)}
+        onClose={() => setShowChangeUsername(false)}
+        inputLabel="Username"
+        title="Change Username"
+        onConfirm={(value) => changeUsername(value)}
       />
+
       <DeleteAccountDialog
         open={showConfirmDelete}
         onClose={() => setShowConfirmDelete(false)}
