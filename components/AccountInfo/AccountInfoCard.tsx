@@ -19,6 +19,7 @@ import UsernameChangeDialog from "components/AccountInfo/UsernameChangeDialog";
 import ConfirmDialog from "components/General/ConfirmDialog";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 import { ChevronRight } from "@mui/icons-material";
+import TitledListItem from "components/General/TitledListItem";
 
 interface AccountInfoCardProps {}
 
@@ -32,67 +33,31 @@ const AccountInfoCard: FunctionComponent<AccountInfoCardProps> = () => {
     <>
       <Container maxWidth="sm" component={Paper} variant="outlined">
         <List>
-          <ListItem sx={{ padding: 2 }}>
-            <Grid container alignItems="center">
-              <Grid item sm={4} xs={12}>
-                <Typography variant="overline">Email</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <div>{user && user.email}</div>
-              </Grid>
-            </Grid>
-          </ListItem>
+          <TitledListItem title="Email">{user && user.email}</TitledListItem>
           <Divider />
-          <ListItemButton
-            sx={{ padding: 2 }}
+          <TitledListItem
+            title="Username"
             onClick={() => setShowChangeUsername(true)}
           >
-            <Grid container alignItems="center">
-              <Grid item sm={4} xs={12}>
-                <Typography variant="overline">Username</Typography>
-              </Grid>
-              <Grid item sm={7} xs={11}>
-                <Typography>{userData && userData.username}</Typography>
-              </Grid>
-              <Grid item xs={1}>
-                <ChevronRight />
-              </Grid>
-            </Grid>
-          </ListItemButton>
+            {userData && userData.username}
+          </TitledListItem>
           <Divider />
-          <ListItemButton
-            sx={{ padding: 2 }}
+          <TitledListItem
             onClick={() => setShowChangePassword(true)}
+            title="Password"
           >
-            <Grid container alignItems="center">
-              <Grid item sm={4} xs={12}>
-                <Typography variant="overline">Password</Typography>
-              </Grid>
-              <Grid item sm={7} xs={11}>
-                <Typography>{"********"}</Typography>
-              </Grid>
-              <Grid item xs={1}>
-                <ChevronRight />
-              </Grid>
-            </Grid>
-          </ListItemButton>
+            ********
+          </TitledListItem>
           <Divider />
-          <ListItem sx={{ padding: 2 }}>
-            <Grid container alignItems="center">
-              <Grid item sm={4} xs={12}>
-                <Typography variant="overline">Delete Account</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  onClick={() => setShowConfirmDelete(true)}
-                  variant="contained"
-                  color="error"
-                >
-                  Delete
-                </Button>
-              </Grid>
-            </Grid>
-          </ListItem>
+          <TitledListItem title="Delete Account">
+            <Button
+              onClick={() => setShowConfirmDelete(true)}
+              variant="contained"
+              color="error"
+            >
+              Delete
+            </Button>
+          </TitledListItem>
         </List>
       </Container>
       <PwdChangeDialog
