@@ -58,8 +58,8 @@ const LeagueCard: FunctionComponent<LeagueCardProps> = ({ id, league }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {league.teams.map((team) => (
-                  <TableRow>
+                {league.teams.map((team, idx) => (
+                  <TableRow key={idx}>
                     <TableCell>{team.name}</TableCell>
                     <TableCell>{team.owner}</TableCell>
                   </TableRow>
