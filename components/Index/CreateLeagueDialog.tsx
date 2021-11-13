@@ -6,12 +6,15 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
+  Switch,
   TextField,
 } from "@mui/material";
-import type { FunctionComponent } from "react";
+import createLeague from "lib/league/createLeague";
+import type { FunctionComponent, FormEventHandler } from "react";
 import { useState } from "react";
 
 interface CreateLeagueDialogProps {
@@ -26,6 +29,7 @@ const CreateLeagueDialog: FunctionComponent<CreateLeagueDialogProps> = ({
   const [leagueName, setLeagueName] = useState("");
   const [draftType, setDraftType] = useState("");
   const [numTeams, setNumTeams] = useState("");
+  const [openLeague, setOpenLeague] = useState(false);
 
   const handleClose = () => {
     setLeagueName("");
@@ -34,10 +38,15 @@ const CreateLeagueDialog: FunctionComponent<CreateLeagueDialogProps> = ({
     onClose();
   };
 
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    await createLeague(leagueName, draftType, Number(numTeams), openLeague);
+  };
+
   return (
     <Container maxWidth="sm">
       <Dialog open={open} fullWidth maxWidth="sm">
-        <form>
+        <form onSubmit={onSubmit}>
           <DialogTitle sx={{ textAlign: "center" }}>Create League</DialogTitle>
           <DialogContent>
             <TextField
@@ -78,8 +87,16 @@ const CreateLeagueDialog: FunctionComponent<CreateLeagueDialogProps> = ({
             </FormControl>
           </DialogContent>
           <DialogActions>
+            <FormControlLabel
+              label="Public"
+              control={
+                <Switch onChange={(e) => setOpenLeague(e.target.checked)} />
+              }
+              sx={{ flexGrow: 1, marginLeft: 2 }}
+            />
+
             <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={() => console.log("create")}>Create</Button>
+            <Button type="submit">Create</Button>
           </DialogActions>
         </form>
       </Dialog>

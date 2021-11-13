@@ -14,8 +14,8 @@ const leagueConverter: FirestoreDataConverter<League> = {
       name: data.name,
       draftType: data.draftType,
       leagueType: data.leagueType,
-      ownerUid: data.ownerUid,
-      createdAt: data.createdAt.toDate(),
+      owner: data.owner,
+      createdAt: data.createdAt ? data.createdAt.toDate() : null,
     };
   },
   toFirestore(league: League) {
@@ -24,7 +24,7 @@ const leagueConverter: FirestoreDataConverter<League> = {
       name: league.name,
       draftType: league.draftType,
       leagueType: league.leagueType,
-      ownerUid: league.ownerUid,
+      owner: league.owner,
       createdAt: Timestamp.fromDate(league.createdAt),
     };
   },
@@ -35,7 +35,7 @@ export function useMyLeagues() {
   const leaguesRef = collection(firestore, "/leagues");
   const leagueQuery = query(
     leaguesRef,
-    where("ownerUid", "==", uid)
+    where("owner", "==", uid),
   ).withConverter(leagueConverter);
   return useCollectionData(leagueQuery, { idField: "id" });
 }
