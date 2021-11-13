@@ -7,7 +7,6 @@ import {
   Grid,
   Grow,
   List,
-  ListItem,
   ListItemButton,
   ListItemText,
   Paper,
@@ -18,8 +17,10 @@ import { useMyLeagues } from "lib/hooks/useMyLeagues";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const [leagues, leaguesLoading, leaguesError] = useMyLeagues();
   const [createLeagueDialog, setCreateLeagueDialog] = useState(false);
   return (
@@ -46,7 +47,7 @@ const Home: NextPage = () => {
               </Button>
             </Grid>
             <Grid item xs={6} sx={{ padding: 2 }}>
-              <Button fullWidth variant="contained">
+              <Button fullWidth variant="contained" disabled>
                 Join a league
               </Button>
             </Grid>
@@ -59,15 +60,20 @@ const Home: NextPage = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              {!leaguesLoading ? (
+              {leagues && leagues.length > 0 ? (
                 <Grow in={!leaguesLoading} timeout={1000}>
-                  <Paper elevation={3} component={List} sx={{ padding: 2 }}>
-                    {leagues?.map((league) => (
-                      <ListItem disablePadding key={league.id}>
-                        <ListItemButton>
-                          <ListItemText>{league.name}</ListItemText>
-                        </ListItemButton>
-                      </ListItem>
+                  <Paper
+                    variant="outlined"
+                    component={List}
+                    sx={{ padding: 2 }}
+                  >
+                    {leagues.map((league) => (
+                      <ListItemButton
+                        key={league.id}
+                        onClick={() => router.push(`/league/${league.id}`)}
+                      >
+                        <ListItemText>{league.name}</ListItemText>
+                      </ListItemButton>
                     ))}
                   </Paper>
                 </Grow>
