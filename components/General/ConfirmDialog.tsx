@@ -27,9 +27,7 @@ const ConfirmDialog: FunctionComponent<ConfirmDialogProps> = ({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="error">
-          Cancel
-        </Button>
+        <Button onClick={onClose}>Cancel</Button>
         <Button onClick={onConfirm}>Confirm</Button>
       </DialogActions>
     </Dialog>
