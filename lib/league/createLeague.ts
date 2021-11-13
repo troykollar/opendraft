@@ -31,7 +31,7 @@ async function createLeague(
     };
 
     try {
-      await addDoc(collection(firestore, "leagues"), league);
+      return await addDoc(collection(firestore, "leagues"), league);
     } catch (err) {
       throw err;
     }

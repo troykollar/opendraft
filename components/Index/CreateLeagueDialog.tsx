@@ -14,6 +14,7 @@ import {
   TextField,
 } from "@mui/material";
 import createLeague from "lib/league/createLeague";
+import { useRouter } from "next/router";
 import type { FunctionComponent, FormEventHandler } from "react";
 import { useState } from "react";
 
@@ -31,6 +32,8 @@ const CreateLeagueDialog: FunctionComponent<CreateLeagueDialogProps> = ({
   const [numTeams, setNumTeams] = useState("");
   const [openLeague, setOpenLeague] = useState(false);
 
+  const router = useRouter();
+
   const handleClose = () => {
     setLeagueName("");
     setDraftType("");
@@ -40,7 +43,13 @@ const CreateLeagueDialog: FunctionComponent<CreateLeagueDialogProps> = ({
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    await createLeague(leagueName, draftType, Number(numTeams), openLeague);
+    const docRef = await createLeague(
+      leagueName,
+      draftType,
+      Number(numTeams),
+      openLeague,
+    );
+    router.push(`/league/${docRef.id}`);
   };
 
   return (
