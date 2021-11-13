@@ -54,13 +54,22 @@ const Home: NextPage = () => {
           </Grid>
           <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
           <Grid container>
-            <Grid item xs={12} sx={{ paddingTop: 1, paddingBottom: 2 }}>
+            <Grid item xs={3}></Grid>
+            <Grid item xs={6} sx={{ paddingTop: 1, paddingBottom: 2 }}>
               <Typography variant="h5" textAlign="center">
                 Your Leagues
               </Typography>
             </Grid>
+            <Grid item xs={3} sx={{ display: "flex", alignItems: "center" }}>
+              <Fade in={leaguesLoading}>
+                <CircularProgress
+                  sx={{ position: "relative", top: -5 }}
+                  size={25}
+                />
+              </Fade>
+            </Grid>
             <Grid item xs={12}>
-              {leagues && leagues.length > 0 ? (
+              {leagues && leagues.length > 0 && (
                 <Grow in={!leaguesLoading} timeout={1000}>
                   <Paper
                     variant="outlined"
@@ -77,20 +86,6 @@ const Home: NextPage = () => {
                     ))}
                   </Paper>
                 </Grow>
-              ) : (
-                <Fade in={leaguesLoading}>
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: 150,
-                    }}
-                  >
-                    <CircularProgress />
-                  </div>
-                </Fade>
               )}
             </Grid>
           </Grid>
