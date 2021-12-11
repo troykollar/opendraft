@@ -1,5 +1,11 @@
 import type { FieldValue } from "@firebase/firestore";
 
+export interface LeagueMember {
+  uid: string;
+  username: string;
+  role: string;
+}
+
 export interface League {
   id: string;
   name: string;
@@ -7,7 +13,7 @@ export interface League {
   draftType: string;
   leagueType: number;
   createdAt: Date;
-  members: string[];
+  members: LeagueMember[];
   open: boolean;
   teams: Team[];
   status: string;
@@ -19,7 +25,7 @@ export interface LeagueDoc {
   draftType: string;
   leagueType: number;
   createdAt: FieldValue;
-  members: string[];
+  members: LeagueMember[];
   open: boolean;
   teams: Team[];
   status: string;

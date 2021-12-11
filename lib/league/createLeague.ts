@@ -1,4 +1,9 @@
-import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
+import {
+  addDoc,
+  collection,
+  DocumentData,
+  serverTimestamp,
+} from "@firebase/firestore";
 import { firestore } from "lib/firebase/firestore";
 import { auth } from "lib/firebase/auth";
 import type { LeagueDoc, Team } from "lib/types";
@@ -8,6 +13,7 @@ async function createLeague(
   draftType: string,
   numTeams: number,
   open: boolean,
+  userData: DocumentData,
 ) {
   if (auth.currentUser) {
     let teams: Team[] = [];
@@ -25,7 +31,13 @@ async function createLeague(
       leagueType: 0,
       name,
       owner: auth.currentUser.uid,
-      members: [],
+      members: [
+        {
+          uid: auth.currentUser.uid,
+          role: "owner",
+          username: userData!.username,
+        },
+      ],
       open,
       teams,
       status: "setup",

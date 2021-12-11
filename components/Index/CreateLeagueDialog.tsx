@@ -16,7 +16,8 @@ import {
 import createLeague from "lib/league/createLeague";
 import { useRouter } from "next/router";
 import type { FunctionComponent, FormEventHandler } from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "lib/context/UserContext";
 
 interface CreateLeagueDialogProps {
   open: boolean;
@@ -27,6 +28,7 @@ const CreateLeagueDialog: FunctionComponent<CreateLeagueDialogProps> = ({
   open,
   onClose,
 }) => {
+  const { userData } = useContext(UserContext);
   const [leagueName, setLeagueName] = useState("");
   const [draftType, setDraftType] = useState("");
   const [numTeams, setNumTeams] = useState("");
@@ -43,13 +45,16 @@ const CreateLeagueDialog: FunctionComponent<CreateLeagueDialogProps> = ({
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    const docRef = await createLeague(
-      leagueName,
-      draftType,
-      Number(numTeams),
-      openLeague,
-    );
-    router.push(`/league/${docRef.id}`);
+    if (userData) {
+      const docRef = await createLeague(
+        leagueName,
+        draftType,
+        Number(numTeams),
+        openLeague,
+        userData,
+      );
+      router.push(`/league/${docRef.id}`);
+    }
   };
 
   return (
