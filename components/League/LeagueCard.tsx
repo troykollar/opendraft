@@ -68,6 +68,29 @@ const LeagueCard: FunctionComponent<LeagueCardProps> = ({ id, league }) => {
             </Table>
           </TitledListItem>
           <Divider />
+          <TitledListItem title="Users">
+            <Table sx={{ marginBottom: 3 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <b>Username</b>
+                  </TableCell>
+                  <TableCell>
+                    <b>Role</b>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {league.members.map((member, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell>{member.username}</TableCell>
+                    <TableCell>{capitalize(member.role)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TitledListItem>
+          <Divider />
           <TitledListItem title="Delete League">
             <DeleteLeagueButton id={id} league={league} />
           </TitledListItem>
